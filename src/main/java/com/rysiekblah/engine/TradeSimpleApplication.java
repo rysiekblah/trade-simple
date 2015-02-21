@@ -5,18 +5,11 @@ import quickfix.*;
 /**
  * Created by tomek on 2/18/15.
  */
-public class FixEngine implements Application {
+public class TradeSimpleApplication implements Application {
     @Override
     public void onCreate(SessionID sessionID) {
         System.out.println("oncreate sessionId: " + sessionID);
         Session session = Session.lookupSession(sessionID);
-        if (session != null) {
-            System.out.println("LoginTime:" + session.getLogonTimeout());
-            System.out.println("Enabled: " + session.isEnabled());
-            System.out.println("LoggedOn: "  + session.isLoggedOn());
-            session.logon();
-            System.out.println("LoggedOn: "  + session.isLoggedOn());
-        }
     }
 
     @Override

@@ -11,7 +11,6 @@ import java.util.Set;
  * Created by tomek on 2/21/15.
  */
 @Component
-@Scope("singleton")
 public class SessionStorage {
     private Set<SessionID> sessions = new HashSet<>();
 

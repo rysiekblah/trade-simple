@@ -77,7 +77,11 @@
           </p>
       </div>
 
-        <table class="table table-bordered table-striped" ng-show="executor.length > 0">
+        <h3>Sessions List</h3>
+        <div class="alert alert-info" ng-show="sessions.length == 0">
+            No sessions found
+        </div>
+        <table class="table table-bordered table-striped" ng-show="sessions.length > 0">
             <thead>
             <tr>
                 <th style="text-align: center; width: 25px;">FIX Ver</th>

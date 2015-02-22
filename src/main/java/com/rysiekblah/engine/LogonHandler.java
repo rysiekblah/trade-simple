@@ -37,7 +37,8 @@ public class LogonHandler extends Observable {
 
     private void notifyListeners(boolean flag, SessionID sessionID) {
         setChanged();
-        sessionStorage.addSession(sessionID);
+        if(flag) sessionStorage.addSession(sessionID);
+        else sessionStorage.removeSession(sessionID);
         //executorService.update(null, new LogonEvent(flag, sessionID));
         //notifyObservers(new LogonEvent(flag, sessionID));
         clearChanged();

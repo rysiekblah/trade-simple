@@ -23,13 +23,14 @@ public class TradeSimpleApplication implements Application {
 
     @Override
     public void onLogon(SessionID sessionID) {
-        System.out.println("logonEvent " + sessionID);
+        System.out.println(" >>>>  logonEvent " + sessionID);
         logonHandler.addSession(sessionID);
     }
 
     @Override
     public void onLogout(SessionID sessionID) {
-
+        System.out.println(" <<<<  logoutEvent: " + sessionID);
+        logonHandler.removeSession(sessionID);
     }
 
     @Override

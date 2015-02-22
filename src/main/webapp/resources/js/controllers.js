@@ -2,7 +2,7 @@
 angular.module('TradeSimple.controllers', []).
     controller('tradeSimpleController', function($scope, tradeSimpleService){
         $scope.executor = []
-        $scope.sessions = []
+        $scope.sessions = {}
 
         tradeSimpleService.getExecutor().
             success(function(response){

@@ -1,5 +1,7 @@
 package com.rysiekblah.engine;
 
+import org.quickfixj.jmx.JmxExporter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import quickfix.*;
 
@@ -13,6 +15,19 @@ import java.io.InputStreamReader;
 @Component
 public class TradeSimple {
 
+    private Application application;
+
+    @Autowired
+    public TradeSimple(Application application) {
+        System.out.println(" ### TradeSimple launched!");
+        this.application = application;
+        try {
+            start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void start() throws Exception {
         InputStream inputStream = TradeSimple.class.getResourceAsStream("trader.cfg");
         if (inputStream == null) {
@@ -21,31 +36,19 @@ public class TradeSimple {
         }
 
         // FooApplication is your class that implements the Application interface
-        Application application = new TradeSimpleApplication();
-
         SessionSettings settings = new SessionSettings(inputStream);
         MessageStoreFactory storeFactory = new FileStoreFactory(settings);
-        LogFactory logFactory = new FileLogFactory(settings);
-        MessageStoreFactory messageStoreFactory = new FileStoreFactory(settings);
+        LogFactory logFactory = new ScreenLogFactory(true, true, true, false); //new FileLogFactory(settings);
         MessageFactory messageFactory = new DefaultMessageFactory();
-        Acceptor acceptor = new SocketAcceptor(application, storeFactory, settings, logFactory, messageFactory);
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        acceptor.start();
 
-        while (true) {
-            System.out.println("type #quit to quit");
-            String value = in.readLine();
-            if (value != null) {
-                if (value.equals("#symbols")) {
-                    //application.orderMatcher().display();
-                } else if (value.equals("#quit")) {
-                    break;
-                } else {
-                    //application.orderMatcher().display();
-                }
-            }
+        Initiator initiator = new SocketInitiator(application, storeFactory, settings, logFactory, messageFactory);
+        JmxExporter exporter = new JmxExporter();
+        exporter.register(initiator);
+        initiator.start();
+        System.out.println("Application started - logon: " + initiator.isLoggedOn());
+        for (SessionID sessionID : initiator.getSessions()) {
+            System.out.println("SessionID: " + sessionID);
         }
-        acceptor.stop();
-        System.exit(0);
+
     }
 }

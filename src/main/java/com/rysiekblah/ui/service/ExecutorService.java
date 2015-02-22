@@ -1,13 +1,36 @@
 package com.rysiekblah.ui.service;
 
+import com.rysiekblah.engine.LogonEvent;
+import com.rysiekblah.engine.LogonHandler;
+import com.rysiekblah.engine.SessionStorage;
 import com.rysiekblah.ui.model.ExecutorBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import quickfix.SessionID;
+
+import java.util.HashSet;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Set;
 
 /**
  * Created by tomek on 2/20/15.
  */
+@Component
 @Service
-public class ExecutorService {
+public class ExecutorService implements Observer {
+
+
+    private SessionStorage sessionStorage;
+
+    @Autowired
+    public void setSessionStorage(SessionStorage sessionStorage) {
+        System.out.println(" ### ExecutorService SS: " + sessionStorage.hashCode());
+        this.sessionStorage = sessionStorage;
+    }
+
+    private Set<SessionID> sessions = new HashSet<>();
 
     private boolean logon = false;
 
@@ -18,5 +41,19 @@ public class ExecutorService {
 
     public ExecutorBean getExecutorState() {
         return new ExecutorBean(isLogon(), "FIX22");
+    }
+
+    public Set<SessionID> getSessions() {
+        return sessionStorage.getSessions();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        System.out.println("HC::update:: " + hashCode());
+        LogonEvent event = (LogonEvent) arg;
+        System.out.println(" ## SessionUPDATE " + event.getIsLogon() + ", " + event.getSessionID());
+        if (event.getIsLogon()) sessions.add(event.getSessionID());
+        else sessions.remove(event.getSessionID());
+        System.out.println("SetSESSIONS :: " + sessions.size());
     }
 }

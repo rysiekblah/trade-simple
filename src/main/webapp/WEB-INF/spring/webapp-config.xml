@@ -9,6 +9,13 @@
     <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
         <property name="resourceLoaderPath" value="/WEB-INF/html/"/>
     </bean>
+    <bean id="sessionStorage" class="com.rysiekblah.engine.SessionStorage"/>
+    <bean id="executorService" class="com.rysiekblah.ui.service.ExecutorService">
+        <property name="sessionStorage" ref="sessionStorage"/>
+    </bean>
+    <bean id="logonHandler" class="com.rysiekblah.engine.LogonHandler">
+        <property name="sessionStorage" ref="sessionStorage"/>
+    </bean>
     <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
         <property name="cache" value="true"/>
         <property name="prefix" value=""/>

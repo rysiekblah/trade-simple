@@ -6,6 +6,10 @@ factory('tradeSimpleService', function($http){
         return $http.get('executor/executorstatus.json')
     };
 
+    respApp.getSessions = function() {
+        return $http.get('executor/sessions.json')
+    }
+
     respApp.getStaticData = function() {
         return [{employees:[
                     {firstName:'John', lastName:'Doe'},

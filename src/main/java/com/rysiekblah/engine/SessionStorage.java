@@ -1,6 +1,5 @@
 package com.rysiekblah.engine;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import quickfix.SessionID;
 

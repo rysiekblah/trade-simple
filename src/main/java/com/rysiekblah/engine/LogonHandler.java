@@ -1,6 +1,5 @@
 package com.rysiekblah.engine;
 
-import com.rysiekblah.ui.service.ExecutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import quickfix.SessionID;

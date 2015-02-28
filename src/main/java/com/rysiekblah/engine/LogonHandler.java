@@ -18,7 +18,6 @@ public class LogonHandler extends Observable {
 
     @Autowired
     public void setSessionStorage(SessionStorage sessionStorage) {
-        System.out.println(" ### LogonHandler SS: " + sessionStorage.hashCode());
         this.sessionStorage = sessionStorage;
     }
 
@@ -38,8 +37,6 @@ public class LogonHandler extends Observable {
         setChanged();
         if(flag) sessionStorage.addSession(sessionID);
         else sessionStorage.removeSession(sessionID);
-        //executorService.update(null, new LogonEvent(flag, sessionID));
-        //notifyObservers(new LogonEvent(flag, sessionID));
         clearChanged();
     }
 

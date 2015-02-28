@@ -14,7 +14,6 @@ public class SessionStorage {
     private Set<SessionID> sessions = new HashSet<>();
 
     public synchronized void addSession(SessionID sessionID) {
-        System.out.println("SessionStorage.addSession - hc " + hashCode());
         sessions.add(sessionID);
     }
 
@@ -23,7 +22,6 @@ public class SessionStorage {
     }
 
     public synchronized Set<SessionID> getSessions() {
-        System.out.println("SessionStorage.getSessions - hc " + hashCode());
         return new HashSet<>(sessions);
     }
 }

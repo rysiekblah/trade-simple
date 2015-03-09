@@ -2,6 +2,8 @@ package com.rysiekblah.engine;
 
 import quickfix.field.OrdType;
 
+import java.util.function.Function;
+
 /**
  * Created by tomek on 2/18/15.
  */
@@ -16,6 +18,15 @@ public class Order {
     private char side;
     private String symbol;
     OrdType t;
+
+    private Function<Order, String> orderString = o -> "\n" +
+            "Time: " + time + "\n" +
+            "Sender: " + sender + "\n" +
+            "Target: " + target + "\n" +
+            "orderID: " + clientOrderId + "\n" +
+            "Price: " + price + "\n" +
+            "Quantity: " + quantity + "\n" +
+            "Type: " + type + "\n";
 
     public Order(long time, String sender, String target, String clientOrderId, double price, long quantity, char type, char side, String symbol) {
         this.time = time;
@@ -64,5 +75,22 @@ public class Order {
 
     public String getSymbol() {
         return symbol;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "time=" + time +
+                ", sender='" + sender + '\'' +
+                ", target='" + target + '\'' +
+                ", clientOrderId='" + clientOrderId + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", type=" + type +
+                ", side=" + side +
+                ", symbol='" + symbol + '\'' +
+                ", t=" + t +
+                ", orderString=" + orderString +
+                '}';
     }
 }

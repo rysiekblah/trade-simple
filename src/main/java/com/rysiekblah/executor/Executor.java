@@ -4,6 +4,7 @@ package com.rysiekblah.executor;
  * Created by tomek on 2/20/15.
  */
 
+import com.rysiekblah.Config;
 import org.quickfixj.jmx.JmxExporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -113,7 +114,7 @@ public class Executor {
 
     public static void main(String args[]) throws Exception {
         try {
-            InputStream inputStream = getSettingsInputStream(args);
+            InputStream inputStream = Config.getInoutStream(Executor.class, args, "executor.cfg");
             SessionSettings settings = new SessionSettings(inputStream);
             inputStream.close();
 
@@ -127,19 +128,5 @@ public class Executor {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
-    }
-
-    private static InputStream getSettingsInputStream(String[] args) throws FileNotFoundException {
-        InputStream inputStream = null;
-        if (args.length == 0) {
-            inputStream = Executor.class.getResourceAsStream("executor.cfg");
-        } else if (args.length == 1) {
-            inputStream = new FileInputStream(args[0]);
-        }
-        if (inputStream == null) {
-            System.out.println("usage: " + Executor.class.getName() + " [configFile].");
-            System.exit(1);
-        }
-        return inputStream;
     }
 }

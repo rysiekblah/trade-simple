@@ -1,5 +1,6 @@
 package com.rysiekblah.engine;
 
+import com.rysiekblah.Config;
 import org.quickfixj.jmx.JmxExporter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,7 +28,7 @@ public class TradeSimple {
     }
 
     public void start() throws Exception {
-        InputStream inputStream = TradeSimple.class.getResourceAsStream("trader.cfg");
+        InputStream inputStream = Config.getInputStream(TradeSimple.class, "trade.cfg");
         if (inputStream == null) {
             System.out.println("No configuration file");
             return;

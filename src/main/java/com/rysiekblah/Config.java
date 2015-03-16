@@ -15,7 +15,7 @@ public class Config {
     private final static Logger log = LoggerFactory.getLogger(Config.class);
 
     public static InputStream getInputStream(Class clazz, String fileName) {
-        log.info("Read config file: " + fileName);
+        log.info("Reading config file: " + fileName);
         return clazz.getResourceAsStream(fileName);
     }
 
@@ -34,20 +34,4 @@ public class Config {
             return getInputStream(clazz, args);
         }
     }
-
-    /*
-    *
-        InputStream inputStream = null;
-        if (args.length == 0) {
-            inputStream = Executor.class.getResourceAsStream("executor.cfg");
-        } else if (args.length == 1) {
-            inputStream = new FileInputStream(args[0]);
-        }
-        if (inputStream == null) {
-            System.out.println("usage: " + Executor.class.getName() + " [configFile].");
-            System.exit(1);
-        }
-        return inputStream;
-    * */
-
 }
